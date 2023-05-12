@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <title>Aide à domicile RH - gestion des salariés</title>
-    <link rel="stylesheet" href="./static/bootstrap.min.css">
-    <link rel="stylesheet" href="./static/font-awesome.css">
+<head th:replace="~{header::head}">
 </head>
 <body>
-<div th:insert="~{common :: navigation(${nbSalarie})}"></div>
+<div th:include="~{common :: navigation(nbSalarie=${nbSalarie})}"></div>
 <div class="container mt-2">
     <div class="jumbotron">
         <h1>[[${message}]] il y a [[${nbSalarie}]] salarié.e.s</h1>

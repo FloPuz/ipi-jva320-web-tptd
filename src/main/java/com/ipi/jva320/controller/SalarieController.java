@@ -44,6 +44,9 @@ public class SalarieController {
             SalarieAideADomicile salarieAideADomicile = salarieAideADomicileService.getSalarie(id.get());
             modelAndView.addObject("salarie",salarieAideADomicile);
         }
+        Long nbSalarie = salarieAideADomicileService.countSalaries();
+        modelAndView.addObject("nbSalarie",nbSalarie);
+
         return modelAndView;
     }
 
@@ -111,6 +114,8 @@ public class SalarieController {
         Page<SalarieAideADomicile> salarieAideADomicilePage = salarieAideADomicileService.getPaginated(PageRequest.of(currentPage, pageSize),sortDirection,sortField);
 
         modelAndView.addObject("salaries", salarieAideADomicilePage);
+        Long nbSalarie = salarieAideADomicileService.countSalaries();
+        modelAndView.addObject("nbSalarie",nbSalarie);
 
 
         return modelAndView;
