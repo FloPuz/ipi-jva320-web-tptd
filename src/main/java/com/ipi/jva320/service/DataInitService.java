@@ -18,7 +18,7 @@ public class DataInitService implements CommandLineRunner {
 
     @Override
     public void run(String... argv) throws Exception {
-        if (this.salarieAideADomicileService.countSalaries() == 0) {
+        if (this.salarieAideADomicileService.countSalaries() != 0) {
             return;
         }
 
@@ -26,5 +26,18 @@ public class DataInitService implements CommandLineRunner {
                 new SalarieAideADomicile("Jean", LocalDate.parse("2022-12-05"), LocalDate.parse("2022-12-05"),
                         20, 0,
                         80, 10, 1));
+        SalarieAideADomicile s2 = this.salarieAideADomicileService.creerSalarieAideADomicile(
+                new SalarieAideADomicile("Jeanne", LocalDate.parse("2022-12-05"), LocalDate.parse("2022-12-05"),
+                        20, 0,
+                        80, 10, 1));
+        SalarieAideADomicile s3 = this.salarieAideADomicileService.creerSalarieAideADomicile(
+                new SalarieAideADomicile("Jeannot", LocalDate.parse("2022-12-05"), LocalDate.parse("2022-12-05"),
+                        20, 0,
+                        80, 10, 1));
+        SalarieAideADomicile s4 = this.salarieAideADomicileService.creerSalarieAideADomicile(
+                new SalarieAideADomicile("TEST", LocalDate.parse("2022-12-05"), LocalDate.parse("2022-12-05"),
+                        20, 0,
+                        80, 10, 1));
+
     }
 }

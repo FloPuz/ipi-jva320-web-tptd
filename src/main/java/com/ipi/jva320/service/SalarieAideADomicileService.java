@@ -5,18 +5,14 @@ import com.ipi.jva320.model.Entreprise;
 import com.ipi.jva320.model.SalarieAideADomicile;
 import com.ipi.jva320.repository.SalarieAideADomicileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -37,7 +33,7 @@ public class SalarieAideADomicileService {
      * @return le nombre de salariés dans la base
      */
     public Long countSalaries() {
-        return salarieAideADomicileRepository.count();
+        return (salarieAideADomicileRepository.count());
     }
 
     /**
@@ -75,6 +71,34 @@ public class SalarieAideADomicileService {
     public SalarieAideADomicile getSalarie(Long id) {
         Optional<SalarieAideADomicile> res = salarieAideADomicileRepository.findById(id);
         return res.isEmpty() ? null : res.get();
+    }
+
+    /***
+     * Retourne la liste des Salarié paginée
+     * @param pageable
+     * @return
+     */
+    public Page<SalarieAideADomicile> getPaginated(Pageable pageable,String sortDirection, String sortField){
+        //List<SalarieAideADomicile> salarieAideADomicileList = this.getSalaries();
+        //List<SalarieAideADomicile> salariePaginated;
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+/*
+        if (salarieAideADomicileList.size() < startItem){
+            salariePaginated = Collections.emptyList();
+        }else {
+            int toIndex = Math.min(startItem + pageSize, salarieAideADomicileList.size());
+            salariePaginated = salarieAideADomicileList.subList(startItem, toIndex);
+        }
+  */
+        //Page<SalarieAideADomicile> salariePage = new PageImpl<SalarieAideADomicile>(salariePaginated, page ,salarieAideADomicileList.size());
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+        Pageable page = PageRequest.of(currentPage, pageSize, sort);
+
+        Page<SalarieAideADomicile> salariePage = this.salarieAideADomicileRepository.findAll(page);
+        return salariePage;
     }
 
     /**
